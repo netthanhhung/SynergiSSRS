@@ -1,0 +1,894 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Textbox Name="Textbox15">
+        <CanGrow>true</CanGrow>
+        <KeepTogether>true</KeepTogether>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>I Love you</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
+        <rd:DefaultName>Textbox15</rd:DefaultName>
+        <Top>0.88853cm</Top>
+        <Left>7.3152cm</Left>
+        <Height>0.6cm</Height>
+        <Width>2.5cm</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+      </Textbox>
+    </ReportItems>
+    <Height>15.56984cm</Height>
+    <Style />
+  </Body>
+  <Width>29.1cm</Width>
+  <Page>
+    <PageHeader>
+      <Height>0.5cm</Height>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="textbox251">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>="Sales Report for " &amp; Code.SiteNames()</Value>
+                  <Style>
+                    <FontSize>6pt</FontSize>
+                    <Color>SteelBlue</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <Top>0.1cm</Top>
+          <Left>0.5cm</Left>
+          <Height>0.4cm</Height>
+          <Width>12cm</Width>
+          <Style>
+            <VerticalAlign>Middle</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style />
+    </PageHeader>
+    <PageFooter>
+      <Height>0.5cm</Height>
+      <PrintOnFirstPage>true</PrintOnFirstPage>
+      <PrintOnLastPage>true</PrintOnLastPage>
+      <ReportItems>
+        <Textbox Name="textbox98">
+          <CanGrow>true</CanGrow>
+          <KeepTogether>true</KeepTogether>
+          <Paragraphs>
+            <Paragraph>
+              <TextRuns>
+                <TextRun>
+                  <Value>="Page " &amp; Globals!PageNumber &amp; " of " &amp; Globals!TotalPages &amp; ". Report generated on " &amp; format(Globals!ExecutionTime,"dd/MM/yyyy HH:mm:ss")</Value>
+                  <Style>
+                    <FontSize>6pt</FontSize>
+                    <Color>SteelBlue</Color>
+                  </Style>
+                </TextRun>
+              </TextRuns>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+            </Paragraph>
+          </Paragraphs>
+          <rd:DefaultName>textbox98</rd:DefaultName>
+          <Top>0cm</Top>
+          <Left>1cm</Left>
+          <Height>0.4cm</Height>
+          <Width>8cm</Width>
+          <Style>
+            <VerticalAlign>Bottom</VerticalAlign>
+            <PaddingLeft>2pt</PaddingLeft>
+            <PaddingRight>2pt</PaddingRight>
+            <PaddingTop>2pt</PaddingTop>
+            <PaddingBottom>2pt</PaddingBottom>
+          </Style>
+        </Textbox>
+      </ReportItems>
+      <Style />
+    </PageFooter>
+    <PageHeight>27cm</PageHeight>
+    <PageWidth>30cm</PageWidth>
+    <InteractiveHeight>29.7cm</InteractiveHeight>
+    <InteractiveWidth>21cm</InteractiveWidth>
+    <ColumnSpacing>1cm</ColumnSpacing>
+    <Style />
+  </Page>
+  <AutoRefresh>0</AutoRefresh>
+  <DataSources>
+    <DataSource Name="TimeClock">
+      <DataSourceReference>TimeClock</DataSourceReference>
+      <rd:SecurityType>None</rd:SecurityType>
+      <rd:DataSourceID>3198c52c-f0bd-42c9-acbd-c9a64eb0e41f</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="ListPeriods">
+      <Query>
+        <DataSourceName>TimeClock</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@OrganisationID">
+            <Value>=Parameters!OrganisationID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>procReportListPeriods</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DateOfPeriodStart">
+          <DataField>DateOfPeriodStart</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DateOfPeriodEnd">
+          <DataField>DateOfPeriodEnd</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="DefaultPeriod">
+      <Query>
+        <DataSourceName>TimeClock</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@OrganisationID">
+            <Value>=Parameters!OrganisationID.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandText>SELECT TOP 1 DateOfPeriodStart, DateOfPeriodEnd
+FROM dbo.vwPeriod
+WHERE (OrganisationID = @OrganisationID)
+AND (DateOfPeriodEnd &lt; GETDATE())
+ORDER BY DateOfPeriodStart DESC</CommandText>
+        <rd:UseGenericDesigner>true</rd:UseGenericDesigner>
+      </Query>
+      <Fields>
+        <Field Name="DateOfPeriodStart">
+          <DataField>DateOfPeriodStart</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="DateOfPeriodEnd">
+          <DataField>DateOfPeriodEnd</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+    <DataSet Name="SiteNames">
+      <Query>
+        <DataSourceName>TimeClock</DataSourceName>
+        <QueryParameters>
+          <QueryParameter Name="@SiteIDs">
+            <Value>=Parameters!SiteIDs.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>procGetSiteNames</CommandText>
+      </Query>
+      <Fields>
+        <Field Name="SiteNames">
+          <DataField>SiteNames</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>    
+  </DataSets>
+  <ReportParameters>
+    <ReportParameter Name="OrganisationID">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>34</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>OrganisationID</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="UserID">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>3CB9B566-034C-4866-8DF5-7E3A69597DE2</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>User ID</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="UserSiteID">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>8</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>UserSiteID</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="SiteIDs">
+      <DataType>String</DataType>
+      <Prompt>Site(s)</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="SiteNames">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>SiteNames</DataSetName>
+          <ValueField>SiteNames</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Site Names</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ReportType">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+    </ReportParameter>
+    <ReportParameter Name="PrimaryDataType">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Primary Data Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Actual</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Estimate</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>3</Value>
+            <Label>Forecast</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>4</Value>
+            <Label>Budget</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="PeriodStartDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>DefaultPeriod</DataSetName>
+          <ValueField>DateOfPeriodStart</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Period Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="SecondryDataType">
+      <DataType>Integer</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>3</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Secondry Data Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Label>None</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Actual</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Estimate</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>3</Value>
+            <Label>Forecast</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>4</Value>
+            <Label>Budget</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="ManualStartDate">
+      <DataType>DateTime</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>=Code.DayOffset(-1)</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Manual Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="TertiaryDataType">
+      <DataType>Integer</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>4</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Tertiary Data Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Label>None</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Actual</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Estimate</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>3</Value>
+            <Label>Forecast</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>4</Value>
+            <Label>Budget</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="PeriodEndDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <DataSetReference>
+          <DataSetName>DefaultPeriod</DataSetName>
+          <ValueField>DateOfPeriodEnd</ValueField>
+        </DataSetReference>
+      </DefaultValue>
+      <Prompt>Period End Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="HistoricDataType">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=IIf(Code.IsPY(), Code.Actual, Code.None)</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Historic Data Type</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="ManualEndDate">
+      <DataType>DateTime</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>=Code.DayOffset(-1)</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Manual End Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="YTDStartDate">
+      <DataType>DateTime</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
+        </Values>
+      </DefaultValue>
+      <Prompt>YTD Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PeriodType">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Period Type</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>0</Value>
+            <Label>=Code.PeriodType0()</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>=Code.PeriodType1()</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>=Code.PeriodType2()</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="StartDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Code.StartDate()</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>StartDate</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="EndDate">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Code.EndDate()</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>EndDate</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="UseEstimate">
+      <DataType>Boolean</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Use Esitmate for future days</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="CultureInfo">
+      <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>Culture Info</Prompt>
+    </ReportParameter>
+  </ReportParameters>
+  <Code>Public Const OnCostsCentreType As String = "ON COSTS"
+Public Const SalesCentreType As String = "SALES"
+Public Const RevenueGroup As Integer = 3
+Public Const None As Integer = 0
+Public Const Actual As Integer = 1
+Public Const Estimate As Integer = 2
+Public Const Forecast As Integer = 3
+Public Const Budget As Integer = 4
+Public Const RoomsDepartment As Integer = 59
+Public Const ApartmentsDepartment As Integer = 125
+
+Function Percentage(ByVal numerator As Double, ByVal denominator As Double) As Double
+    ' Since returning type is Double, 
+    ' Double.NaN is returned if totalSales is zero.
+    Return (numerator/denominator)   
+End Function
+
+Function IsEqual(ByVal str1 As String, ByVal str2 As String) As Boolean
+    Return (UCase(Trim(str1)) = UCase(Trim(str2)))
+End Function
+
+Function DrillDownReport(ByVal centreType As String) As String
+    If IsEqual(centreType, SalesCentreType) Then
+      Return "DistributionChannelsByAgentCompany"
+    ElseIf (IsEqual(centreType, "PAYROLL") OrElse IsEqual(centreType, "PAYROLL - CONTRACT")) Then
+      Return "PayrollCostCentres"
+    Else
+      Return "OperatingStatementDetail"
+    End If
+End Function
+
+Function ToolTip(ByVal centreType As String) As String
+    Return "Click to view the " + DrillDownReport(centreType) &amp; " report for the specified date range"
+End Function
+
+Function ExcludeOnCosts(ByVal centreType As String, ByVal value As Double) As Double
+    If (IsEqual(centreType, OnCostsCentreType)) Then
+        Return 0
+    Else
+        Return value
+    End If
+End Function
+
+Function Sales(ByVal centreType As String, ByVal value As Double) As Double
+    Return IIf(IsEqual(centreType, SalesCentreType), value, 0)
+End Function
+
+Function IsAccommodationDepartment(ByVal departmentId As Integer) As Boolean
+    Return IsEqual(departmentId, RoomsDepartment) OR IsEqual(departmentId, ApartmentsDepartment)
+End Function
+
+Function IsRoomsDepartment(ByVal departmentId As Integer) As Boolean
+    Return IsEqual(departmentId, RoomsDepartment) 
+End Function
+
+Function IsApartmentsDepartment(ByVal departmentId As Integer) As Boolean
+    Return IsEqual(departmentId, ApartmentsDepartment)
+End Function
+
+Function PercentageOfSales(ByVal departmentId As Integer, ByVal level As String) As String
+    Return IIf(IsAccommodationDepartment(departmentId), "$ per occupied room", "% of Sales")
+End Function
+
+' Calculates the Total Sales under the Accommodation Departments (DepartmentID 59, 125)
+Function TotalRoomSales(ByVal departmentId As Integer, ByVal centreType As String, ByVal value As Double) As Double
+     Return IIf(IsAccommodationDepartment(departmentId), Sales(centreType, value), 0)
+End Function
+
+Function StartDate() As DateTime
+   ' If Manual Date Entry is used, use it's value, else use defined periods
+   Return IIf(IsNothing(Report.Parameters!ManualStartDate.Value), Report.Parameters!PeriodStartDate.Value, Report.Parameters!ManualStartDate.Value)
+End Function
+
+Function EndDate() As DateTime
+   ' If Manual Date Entry is used, use it's value, else use defined periods
+   Return IIf(IsNothing(Report.Parameters!ManualEndDate.Value), Report.Parameters!PeriodEndDate.Value, Report.Parameters!ManualEndDate.Value)
+End Function
+
+Function DayOffset(ByVal offset As Integer) As DateTime
+   Return DateAdd(DateInterval.Day, -1, Today())
+End Function
+
+Function AdjustYearStartDate(ByVal YearStartDate As DateTime) As DateTime
+   'If this is Sydney, then adjust the YTD startdate to be '08/Oct/2008'
+   Dim DateStr As DateTime
+   If (Report.Parameters!SiteID.Value = 14) AND NOT IsNothing(Report.Parameters!ManualStartDate.Value) AND (Report.Parameters!UseFinancialYear.Value = "False") Then
+      If (Datepart("yyyy", YearStartDate) = 2008) OR  (Datepart("yyyy", YearStartDate) = 2007) OR  (Datepart("yyyy", YearStartDate) = 2006) Then 
+         DateStr = "08/Oct/" &amp; Datepart("yyyy", YearStartDate)	
+      Else	
+         DateStr = YearStartDate	
+      End If	 
+   Else	
+      DateStr = YearStartDate
+   End If
+   Return DateStr
+End Function  
+
+' Called from the CentreType groups Filter tab 
+' to hide any rows containing all zeros.
+Function NonZero(ByVal value As Decimal) As Boolean
+    Return (value &lt;&gt; 0)
+End Function
+
+Function SubCentreDisplay(ByVal subCentre As String, ByVal accountCode As String) As String
+ Return Trim(subCentre) &amp; IIf(IsNothing(accountCode), "", " (" &amp; Trim(accountCode) &amp; ")")
+    End Function
+
+    Function SiteCount() As Integer
+    Return Report.Parameters!SiteIDs.Count
+    End Function
+
+    Function SiteNames() As String
+      Return Trim(Report.Parameters!SiteNames.Value)
+    End Function
+
+    Function SiteName(ByVal i As Integer) As String
+    If (i &lt;= SiteCount()) Then
+    Return Trim(Report.Parameters!SiteIDs.Label(i-1))
+  Else
+    Return ""
+  End If
+End Function
+
+Function RoomToolTip(ByVal roomSales As Double, ByVal numRooms As Integer) As String
+ Return FormatCurrency(roomSales, 0, TriState.True, TriState.True, TriState.True) &amp; " over " &amp; FormatNumber(numRooms, 0, TriState.True, TriState.False, TriState.True) &amp; " Rooms"
+End Function
+
+Function Append(i As Integer) As String
+     Return Trim(CStr(i)) &amp; ","
+End Function
+
+Function TransactionTypes() As String
+  Dim str As String
+  str = Append(Report.Parameters!PrimaryDataType.Value)
+  str = str &amp; Append(Report.Parameters!SecondryDataType.Value)
+  str = str &amp; Append(Report.Parameters!TertiaryDataType.Value)
+  str = str &amp; Append(Report.Parameters!HistoricDataType.Value)
+  str = str &amp; Append(Report.Parameters!HistoricDataType.Value)
+  str = str &amp; Append(Report.Parameters!HistoricDataType.Value)
+  ' Remove trailing ", "
+  Return Left(str, (Len(str) - 1))
+End Function
+
+Function IsPY() As Boolean
+     Return (Report.Parameters!ReportType.Value = 0)
+End Function
+
+Function IsMonthly() As Boolean
+     Return (Report.Parameters!ReportType.Value = 1)
+End Function
+
+Function IsSiteComparison() As Boolean
+     Return (Report.Parameters!ReportType.Value = 2)
+End Function
+
+Function PeriodType0() As String
+  Dim str As String
+  If (IsPY()) Then
+    str = "Calendar YTD"
+  Else If (IsMonthly()) Then
+    str = "Calendar Months"
+  Else If (IsSiteComparison()) Then
+    str = "Calendar Month"
+  End If
+  Return str
+End Function
+
+Function PeriodType1() As String
+  Dim str As String
+  If (IsPY()) Then
+    str = "Financial YTD"
+  Else If (IsMonthly()) Then
+    str = "Business Months"
+  Else If (IsSiteComparison()) Then
+    str = "Business Month"
+  End If
+  Return str
+End Function
+
+Function PeriodType2() As String
+  Dim str As String
+  If (IsPY()) Then
+    str = "Month To Date"
+  Else If (IsMonthly()) Then
+    str = "Business Months"
+  Else If (IsSiteComparison()) Then
+    str = "Business Month"
+  End If
+  Return str
+End Function
+
+
+Function LeftHeader() As String
+     Return IIf(IsPY(), "Period To Date", "")
+End Function
+
+Function RightHeader() As String
+  Dim str As String
+  Select Case Report.Parameters!PeriodType.Value
+      Case 0
+          str = "Calendar YTD"
+      Case 1
+          str = "Financial YTD"
+      Case 2
+          str = "Month To Date"
+  End Select  
+  Return str
+End Function
+Function ColumnHeader(ByVal column As Integer, ByVal startDate As DateTime, ByVal endDate As DateTime) As String
+    Dim str As String
+    Select Case column
+        Case 1
+            If (IsPY()) Then
+                str = "Current " &amp; Report.Parameters!PrimaryDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 2
+            If (IsPY()) Then
+                str = "Current " &amp; Report.Parameters!SecondryDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 3
+            If (IsPY()) Then
+                str = "Current " &amp; Report.Parameters!TertiaryDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 4
+            If (IsPY()) Then
+                str = "Last Year " &amp; Report.Parameters!HistoricDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 5
+            If (IsPY()) Then
+                str = "Previous Year " &amp; Report.Parameters!HistoricDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 6
+            If (IsPY()) Then
+                str = "Prior Year " &amp; Report.Parameters!HistoricDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 7
+            If (IsPY()) Then
+                str = "Current " &amp; Report.Parameters!PrimaryDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 8
+            If (IsPY()) Then
+                str = "Current " &amp; Report.Parameters!SecondryDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 9
+            If (IsPY()) Then
+                str = "Current " &amp; Report.Parameters!TertiaryDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 10
+            If (IsPY()) Then
+                str = "Last Year " &amp; Report.Parameters!HistoricDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 11
+            If (IsPY()) Then
+                str = "Previous Year " &amp; Report.Parameters!HistoricDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 12
+            If (IsPY()) Then
+                str = "Prior Year " &amp; Report.Parameters!HistoricDataType.Label &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsMonthly()) Then
+                str = MonthName(Month(endDate)) &amp; "          " &amp; Format(startDate, "dd/MM/yyyy") &amp; " to " &amp; Format(endDate, "dd/MM/yyyy")
+            Else If (IsSiteComparison()) Then
+                str = SiteName(column)
+            End If
+        Case 13
+            str = ""
+    End Select
+    Return str
+End Function
+
+Function Hidden(ByVal column As Integer) As Boolean
+    Dim isHidden As Boolean
+    Select Case column
+        Case 1
+            isHidden = False
+        Case 2
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!SecondryDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 3
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!TertiaryDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 4
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!HistoricDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 5
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!HistoricDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 6
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!HistoricDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 7
+            If (IsPY()) Then
+                isHidden = False
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 8
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!SecondryDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 9
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!TertiaryDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 10
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!HistoricDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 11
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!HistoricDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 12
+            If (IsPY()) Then
+                isHidden = (Report.Parameters!HistoricDataType.Value = 0)
+            Else If (IsMonthly()) Then
+                isHidden = False
+            Else If (IsSiteComparison()) Then
+                isHidden = (column &gt; SiteCount())
+            End If
+        Case 13
+            isHidden = IsPY()
+    End Select
+    Return isHidden
+End Function
+
+' Rooms Department detail is to be hidden (colapsed) by default, others visble.
+Function HideRow(ByVal departmentId As Integer) As Boolean
+     Return IsEqual(departmentId, RoomsDepartment)
+End Function</Code>
+  <Language>=Parameters!CultureInfo.Value</Language>
+  <ConsumeContainerWhitespace>true</ConsumeContainerWhitespace>
+  <rd:ReportUnitType>Cm</rd:ReportUnitType>
+  <rd:ReportID>29183014-f1d9-47b2-8066-58e317130868</rd:ReportID>
+</Report>

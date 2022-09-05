@@ -1,0 +1,33 @@
+'==================================================================
+' 	ERROL EDITS
+'	Last edit: 31-Oct-2009 14:10
+'==================================================================
+Function GetLanguageType(objColumn)
+	Dim languageType
+	Dim suffix
+	
+	languageType = objColumn.LanguageType
+	
+	If objColumn.IsNullable Then
+		suffix = "?"
+	Else
+		suffix = ""
+	End If
+
+	GetLanguageType = languageType & suffix
+End Function
+
+Function GetConversionType(objColumn)
+	Dim languageType
+	Dim prefix
+	
+	languageType = SetPascalCase(objColumn.LanguageType)
+	
+	If objColumn.IsNullable Then
+		prefix = "N"
+	Else
+		prefix = ""
+	End If
+
+	GetConversionType = prefix & languageType 
+End Function

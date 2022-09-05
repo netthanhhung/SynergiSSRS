@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{F14B399A-7131-4C87-9E4B-1186C45EF12D}") = "Planet.Rockford.TimeClock.Report", "Planet.Rockford.TimeClock.Report.rptproj", "{E8094A17-2C49-4A8B-A409-373A22E87354}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		DebugLocal|Default = DebugLocal|Default
+		Production|Default = Production|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.Debug|Default.ActiveCfg = Debug
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.Debug|Default.Build.0 = DebugLocal
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.Debug|Default.Deploy.0 = DebugLocal
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.DebugLocal|Default.ActiveCfg = DebugLocal
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.DebugLocal|Default.Build.0 = DebugLocal
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.Production|Default.ActiveCfg = Production
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.Production|Default.Build.0 = Production
+		{E8094A17-2C49-4A8B-A409-373A22E87354}.Production|Default.Deploy.0 = Production
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

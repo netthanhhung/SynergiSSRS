@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="Planet.Rockford.TimeClock.Report">
+</Property><Property Name="Solution File" Value="D:\Synergi\EzysoftwareReporting\trunk\Planet.Rockford.TimeClock.Report\Planet.Rockford.TimeClock.Report.sln">
+</Property><Property Name="User Options File" Value="D:\Synergi\EzysoftwareReporting\trunk\Planet.Rockford.TimeClock.Report\Planet.Rockford.TimeClock.Report.suo">
+</Property><Property Name="Date" Value="Thursday, 17 April 2014">
+</Property><Property Name="Time" Value="9:42 AM">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="Planet.Rockford.TimeClock.Report.sln" Description="File successfully backed up as D:\Synergi\EzysoftwareReporting\trunk\Planet.Rockford.TimeClock.Report\Backup\Planet.Rockford.TimeClock.Report.sln">
+</Event><Event ErrorLevel="0" Project="" Source="Planet.Rockford.TimeClock.Report.suo" Description="File successfully backed up as D:\Synergi\EzysoftwareReporting\trunk\Planet.Rockford.TimeClock.Report\Backup\Planet.Rockford.TimeClock.Report.suo">
+</Event><Event ErrorLevel="0" Project="" Source="Planet.Rockford.TimeClock.Report.sln" Description="Solution converted successfully">
+</Event><Event ErrorLevel="3" Project="" Source="Planet.Rockford.TimeClock.Report.sln" Description="Converted">
+</Event></UpgradeLog>

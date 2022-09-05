@@ -1,0 +1,1483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2005/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <DataSources>
+    <DataSource Name="TimeClock">
+      <rd:DataSourceID>1ba72f75-393c-4fa9-bafd-168707c74c49</rd:DataSourceID>
+      <DataSourceReference>TimeClock</DataSourceReference>
+    </DataSource>
+  </DataSources>
+  <InteractiveHeight>30cm</InteractiveHeight>
+  <ReportParameters>
+    <ReportParameter Name="UserID">
+      <DataType>String</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>3CB9B566-034C-4866-8DF5-7E3A69597DE2</Value>
+        </Values>
+      </DefaultValue>
+      <AllowBlank>false</AllowBlank>
+      <Prompt>UserID</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="OrganisationID">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>34</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>OrganisationID</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="UserSiteID">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>12</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>UserSiteID</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="ListSites">
+      <DataType>Boolean</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>True</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ListSites</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="SiteID">
+      <DataType>Integer</DataType>
+      <Nullable>true</Nullable>
+      <DefaultValue>
+        <Values>
+          <Value>=Parameters!UserSiteID.Value</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Site</Prompt>
+      <ValidValues>
+        <DataSetReference>
+          <DataSetName>ListSite</DataSetName>
+          <ValueField>SiteID</ValueField>
+          <LabelField>Name</LabelField>
+        </DataSetReference>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="UseDefinedPeriods">
+      <DataType>Boolean</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>False</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>UseDefinedPeriods</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PeriodType">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Period to Analyse</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Just StartDate</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>One Week From Start Date</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>3</Value>
+            <Label>One Month From StartDate</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="DatePeriodStart">
+      <DataType>DateTime</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>=Code.StartOfNextMonth()</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>DatePeriodStart</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PeriodCountOverride">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>0</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>PeriodCountOverride</Prompt>
+      <Hidden>true</Hidden>
+    </ReportParameter>
+    <ReportParameter Name="HistoricalYear">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>1</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>HistoricalYear</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Last Year</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>2 Years Ago</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>3</Value>
+            <Label>3 Years Ago</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>4</Value>
+            <Label>4 Years Ago</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>5</Value>
+            <Label>5 Years Ago</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter Name="ShowRoomNights">
+      <DataType>Boolean</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>False</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>ShowRoomNights</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="GroupBy">
+      <DataType>Integer</DataType>
+      <DefaultValue>
+        <Values>
+          <Value>2</Value>
+        </Values>
+      </DefaultValue>
+      <Prompt>Group By</Prompt>
+      <ValidValues>
+        <ParameterValues>
+          <ParameterValue>
+            <Value>1</Value>
+            <Label>Daily</Label>
+          </ParameterValue>
+          <ParameterValue>
+            <Value>2</Value>
+            <Label>Weekly</Label>
+          </ParameterValue>
+        </ParameterValues>
+      </ValidValues>
+    </ReportParameter>
+  </ReportParameters>
+  <rd:DrawGrid>true</rd:DrawGrid>
+  <InteractiveWidth>38cm</InteractiveWidth>
+  <rd:GridSpacing>0.25cm</rd:GridSpacing>
+  <rd:SnapToGrid>true</rd:SnapToGrid>
+  <RightMargin>1cm</RightMargin>
+  <LeftMargin>1cm</LeftMargin>
+  <BottomMargin>1cm</BottomMargin>
+  <rd:ReportID>39ec57ff-a607-42ab-9f4e-23e698e1659f</rd:ReportID>
+  <PageWidth>40cm</PageWidth>
+  <DataSets>
+    <DataSet Name="ListSite">
+      <Fields>
+        <Field Name="SiteID">
+          <DataField>SiteID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Name">
+          <DataField>Name</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>TimeClock</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>procReportListSite</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@OrganisationID">
+            <Value>=Parameters!OrganisationID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ShowLegacy">
+            <Value>False</Value>
+          </QueryParameter>
+          <QueryParameter Name="@UserSiteID">
+            <Value>=Parameters!UserSiteID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ListSites">
+            <Value>=Parameters!ListSites.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ShowAllOption">
+            <Value>True</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+    <DataSet Name="ReportPickupRateChart">
+      <Fields>
+        <Field Name="SiteID">
+          <DataField>SiteID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Period">
+          <DataField>Period</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Date">
+          <DataField>Date</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="RoomsAvailable">
+          <DataField>RoomsAvailable</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="Holdings">
+          <DataField>Holdings</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HoldingsLast">
+          <DataField>HoldingsLast</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="HoldingsPrevious">
+          <DataField>HoldingsPrevious</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="Rate">
+          <DataField>Rate</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RateLast">
+          <DataField>RateLast</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="RatePrevious">
+          <DataField>RatePrevious</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="TotalRoomsAvailable">
+          <DataField>TotalRoomsAvailable</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalRoomsAvailableLast">
+          <DataField>TotalRoomsAvailableLast</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="TotalRoomsAvailablePrevious">
+          <DataField>TotalRoomsAvailablePrevious</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+      </Fields>
+      <Query>
+        <DataSourceName>TimeClock</DataSourceName>
+        <CommandType>StoredProcedure</CommandType>
+        <CommandText>procReportPickupRateChart2</CommandText>
+        <QueryParameters>
+          <QueryParameter Name="@OrganisationID">
+            <Value>=Parameters!OrganisationID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@SiteID">
+            <Value>=Parameters!SiteID.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@PeriodType">
+            <Value>=Parameters!PeriodType.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@PeriodCountOverride">
+            <Value>=Parameters!PeriodCountOverride.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@UseDefinedPeriods">
+            <Value>=Parameters!UseDefinedPeriods.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@DatePeriodStart">
+            <Value>=Parameters!DatePeriodStart.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@HistoricalYear">
+            <Value>=Parameters!HistoricalYear.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@ShowRoomNights">
+            <Value>=Parameters!ShowRoomNights.Value</Value>
+          </QueryParameter>
+          <QueryParameter Name="@GroupBy">
+            <Value>=Parameters!GroupBy.Value</Value>
+          </QueryParameter>
+        </QueryParameters>
+      </Query>
+    </DataSet>
+  </DataSets>
+  <Code>
+Function StartOfNextMonth() As DateTime
+   ' Returns the first day of the next Month.
+   Return DateSerial(Year(DateAdd(DateInterval.Month, 1, Today())), Month(DateAdd(DateInterval.Month, 1, Today())), 01)
+End Function</Code>
+  <Width>37.75cm</Width>
+  <Body>
+    <ColumnSpacing>1cm</ColumnSpacing>
+    <ReportItems>
+      <Table Name="table2">
+        <ZIndex>1</ZIndex>
+        <DataSetName>ReportPickupRateChart</DataSetName>
+        <Top>1cm</Top>
+        <TableGroups>
+          <TableGroup>
+            <Grouping Name="table2_Group1">
+              <GroupExpressions>
+                <GroupExpression>=Fields!SiteID.Value</GroupExpression>
+              </GroupExpressions>
+            </Grouping>
+            <Header>
+              <TableRows>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ColSpan>15</ColSpan>
+                      <ReportItems>
+                        <Textbox Name="textbox122">
+                          <Style>
+                            <Color>SteelBlue</Color>
+                            <FontFamily>Tahoma</FontFamily>
+                            <FontSize>14pt</FontSize>
+                            <FontWeight>900</FontWeight>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                          <ZIndex>32</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value>=UCASE(First(Fields!SiteID.Value))</Value>
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.75cm</Height>
+                </TableRow>
+              </TableRows>
+              <RepeatOnNewPage>true</RepeatOnNewPage>
+            </Header>
+            <Footer>
+              <TableRows>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ColSpan>15</ColSpan>
+                      <ReportItems>
+                        <Chart Name="chart3">
+                          <Legend>
+                            <Visible>true</Visible>
+                            <Style>
+                              <BorderStyle>
+                                <Default>Solid</Default>
+                              </BorderStyle>
+                            </Style>
+                            <Position>RightCenter</Position>
+                          </Legend>
+                          <CategoryAxis>
+                            <Axis>
+                              <Title>
+                                <Caption>Periods</Caption>
+                              </Title>
+                              <Style />
+                              <MajorGridLines>
+                                <ShowGridLines>true</ShowGridLines>
+                                <Style>
+                                  <BorderColor>
+                                    <Default>Red</Default>
+                                  </BorderColor>
+                                  <BorderStyle>
+                                    <Default>Dashed</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MajorGridLines>
+                              <MinorGridLines>
+                                <Style>
+                                  <BorderColor>
+                                    <Default>IndianRed</Default>
+                                  </BorderColor>
+                                  <BorderStyle>
+                                    <Default>Dashed</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MinorGridLines>
+                              <MajorTickMarks>Outside</MajorTickMarks>
+                              <Min>0</Min>
+                              <MajorInterval>=IIF(Parameters!GroupBy.Value = 1, 6, 1)</MajorInterval>
+                              <MinorInterval>1</MinorInterval>
+                              <Visible>true</Visible>
+                            </Axis>
+                          </CategoryAxis>
+                          <DataSetName>ReportPickupRateChart</DataSetName>
+                          <PlotArea>
+                            <Style>
+                              <BackgroundColor>LightGrey</BackgroundColor>
+                              <BackgroundGradientEndColor>LightGrey</BackgroundGradientEndColor>
+                              <BorderStyle>
+                                <Default>Solid</Default>
+                              </BorderStyle>
+                            </Style>
+                          </PlotArea>
+                          <ThreeDProperties>
+                            <Enabled>true</Enabled>
+                            <Inclination>-10</Inclination>
+                            <Perspective>10</Perspective>
+                            <Shading>Simple</Shading>
+                            <WallThickness>20</WallThickness>
+                          </ThreeDProperties>
+                          <PointWidth>0</PointWidth>
+                          <SeriesGroupings>
+                            <SeriesGrouping>
+                              <StaticSeries>
+                                <StaticMember>
+                                  <Label>Holdings Previous Year</Label>
+                                </StaticMember>
+                                <StaticMember>
+                                  <Label>Holdings Last Year</Label>
+                                </StaticMember>
+                                <StaticMember>
+                                  <Label>Current Holdings</Label>
+                                </StaticMember>
+                                <StaticMember>
+                                  <Label>Rooms Available</Label>
+                                </StaticMember>
+                              </StaticSeries>
+                            </SeriesGrouping>
+                          </SeriesGroupings>
+                          <Subtype>Stacked</Subtype>
+                          <ValueAxis>
+                            <Axis>
+                              <Title>
+                                <Caption>Rooms Sold</Caption>
+                                <Style />
+                              </Title>
+                              <MajorGridLines>
+                                <ShowGridLines>true</ShowGridLines>
+                                <Style>
+                                  <BorderColor>
+                                    <Default>LightYellow</Default>
+                                  </BorderColor>
+                                  <BorderStyle>
+                                    <Default>Solid</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MajorGridLines>
+                              <MinorGridLines>
+                                <Style>
+                                  <BorderStyle>
+                                    <Default>Solid</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MinorGridLines>
+                              <MajorTickMarks>Outside</MajorTickMarks>
+                              <Min>0</Min>
+                              <MajorInterval>=IIF(Parameters!ShowRoomNights.Value = "False", 10, IIF(Parameters!GroupBy.Value = 1, 100, 1000))</MajorInterval>
+                              <Margin>true</Margin>
+                              <Visible>true</Visible>
+                              <Scalar>true</Scalar>
+                            </Axis>
+                          </ValueAxis>
+                          <Type>Column</Type>
+                          <CategoryGroupings>
+                            <CategoryGrouping>
+                              <DynamicCategories>
+                                <Grouping Name="chart3_CategoryGroup1">
+                                  <GroupExpressions>
+                                    <GroupExpression>=Fields!Period.Value</GroupExpression>
+                                  </GroupExpressions>
+                                </Grouping>
+                                <Label>=Format(Fields!Date.Value, "dd MMM")</Label>
+                              </DynamicCategories>
+                            </CategoryGrouping>
+                          </CategoryGroupings>
+                          <Palette>Pastel</Palette>
+                          <ChartData>
+                            <ChartSeries>
+                              <DataPoints>
+                                <DataPoint>
+                                  <DataValues>
+                                    <DataValue>
+                                      <Value>=IIF(Parameters!ShowRoomNights.Value = "False", Fields!HoldingsPrevious.Value/Fields!TotalRoomsAvailablePrevious.Value * 100, Fields!HoldingsPrevious.Value)</Value>
+                                    </DataValue>
+                                  </DataValues>
+                                  <DataLabel>
+                                    <Style />
+                                  </DataLabel>
+                                  <Style>
+                                    <BorderColor>
+                                      <Default>ForestGreen</Default>
+                                    </BorderColor>
+                                  </Style>
+                                  <Marker>
+                                    <Size>6pt</Size>
+                                  </Marker>
+                                </DataPoint>
+                              </DataPoints>
+                              <PlotType>Line</PlotType>
+                            </ChartSeries>
+                            <ChartSeries>
+                              <DataPoints>
+                                <DataPoint>
+                                  <DataValues>
+                                    <DataValue>
+                                      <Value>=IIF(Parameters!ShowRoomNights.Value = "False", Fields!HoldingsLast.Value/Fields!TotalRoomsAvailableLast.Value * 100, Fields!HoldingsLast.Value)</Value>
+                                    </DataValue>
+                                  </DataValues>
+                                  <DataLabel />
+                                  <Style>
+                                    <BorderColor>
+                                      <Default>Chocolate</Default>
+                                    </BorderColor>
+                                  </Style>
+                                  <Marker>
+                                    <Size>6pt</Size>
+                                  </Marker>
+                                </DataPoint>
+                              </DataPoints>
+                              <PlotType>Line</PlotType>
+                            </ChartSeries>
+                            <ChartSeries>
+                              <DataPoints>
+                                <DataPoint>
+                                  <DataValues>
+                                    <DataValue>
+                                      <Value>=IIF(Parameters!ShowRoomNights.Value = "False", Fields!Holdings.Value/Fields!TotalRoomsAvailable.Value * 100, Fields!Holdings.Value)</Value>
+                                    </DataValue>
+                                  </DataValues>
+                                  <DataLabel />
+                                  <Style>
+                                    <BorderColor>
+                                      <Default>Blue</Default>
+                                    </BorderColor>
+                                  </Style>
+                                  <Marker>
+                                    <Size>6pt</Size>
+                                  </Marker>
+                                </DataPoint>
+                              </DataPoints>
+                              <PlotType>Line</PlotType>
+                            </ChartSeries>
+                            <ChartSeries>
+                              <DataPoints>
+                                <DataPoint>
+                                  <DataValues>
+                                    <DataValue>
+                                      <Value>IIF(Parameters!ShowRoomNights.Value = "False", Fields!RoomsAvailable.Value, Fields!TotalRoomsAvailable.Value</Value>
+                                    </DataValue>
+                                  </DataValues>
+                                  <DataLabel />
+                                  <Style>
+                                    <BorderColor>
+                                      <Default>Yellow</Default>
+                                    </BorderColor>
+                                  </Style>
+                                  <Marker>
+                                    <Size>6pt</Size>
+                                  </Marker>
+                                </DataPoint>
+                              </DataPoints>
+                              <PlotType>Line</PlotType>
+                            </ChartSeries>
+                          </ChartData>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <Title>
+                            <Caption>PICKUP RATE</Caption>
+                            <Style>
+                              <FontSize>12pt</FontSize>
+                              <FontWeight>700</FontWeight>
+                            </Style>
+                          </Title>
+                        </Chart>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>12cm</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox2">
+                          <rd:DefaultName>textbox2</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>15</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox3">
+                          <rd:DefaultName>textbox3</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>14</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox4">
+                          <rd:DefaultName>textbox4</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>13</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox5">
+                          <rd:DefaultName>textbox5</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>12</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox6">
+                          <rd:DefaultName>textbox6</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>11</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox7">
+                          <rd:DefaultName>textbox7</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>10</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox8">
+                          <rd:DefaultName>textbox8</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>9</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox9">
+                          <rd:DefaultName>textbox9</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>8</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox10">
+                          <rd:DefaultName>textbox10</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>7</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox11">
+                          <rd:DefaultName>textbox11</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>6</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox12">
+                          <rd:DefaultName>textbox12</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>5</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox13">
+                          <rd:DefaultName>textbox13</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>4</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox14">
+                          <rd:DefaultName>textbox14</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>3</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox15">
+                          <rd:DefaultName>textbox15</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>2</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox16">
+                          <rd:DefaultName>textbox16</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>1</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.63492cm</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ColSpan>15</ColSpan>
+                      <ReportItems>
+                        <Chart Name="chart1">
+                          <Legend>
+                            <Visible>true</Visible>
+                            <Style>
+                              <BorderStyle>
+                                <Default>Solid</Default>
+                              </BorderStyle>
+                            </Style>
+                            <Position>RightCenter</Position>
+                          </Legend>
+                          <CategoryAxis>
+                            <Axis>
+                              <Title>
+                                <Caption>Periods</Caption>
+                              </Title>
+                              <Style />
+                              <MajorGridLines>
+                                <Style>
+                                  <BorderStyle>
+                                    <Default>Solid</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MajorGridLines>
+                              <MinorGridLines>
+                                <Style>
+                                  <BorderStyle>
+                                    <Default>Solid</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MinorGridLines>
+                              <MajorTickMarks>Outside</MajorTickMarks>
+                              <Min>0</Min>
+                              <Visible>true</Visible>
+                            </Axis>
+                          </CategoryAxis>
+                          <ZIndex>16</ZIndex>
+                          <DataSetName>ReportPickupRateChart</DataSetName>
+                          <PlotArea>
+                            <Style>
+                              <BackgroundColor>LightGrey</BackgroundColor>
+                              <BackgroundGradientEndColor>LightGrey</BackgroundGradientEndColor>
+                              <BorderStyle>
+                                <Default>Solid</Default>
+                              </BorderStyle>
+                            </Style>
+                          </PlotArea>
+                          <ThreeDProperties>
+                            <Enabled>true</Enabled>
+                            <Inclination>-10</Inclination>
+                            <Perspective>10</Perspective>
+                            <Shading>Simple</Shading>
+                            <WallThickness>20</WallThickness>
+                          </ThreeDProperties>
+                          <PointWidth>0</PointWidth>
+                          <SeriesGroupings>
+                            <SeriesGrouping>
+                              <StaticSeries>
+                                <StaticMember>
+                                  <Label>Average Room Rate</Label>
+                                </StaticMember>
+                                <StaticMember>
+                                  <Label>Room Rate Last Year</Label>
+                                </StaticMember>
+                                <StaticMember>
+                                  <Label>Room Rate Previous Year</Label>
+                                </StaticMember>
+                              </StaticSeries>
+                            </SeriesGrouping>
+                          </SeriesGroupings>
+                          <Subtype>Plain</Subtype>
+                          <ValueAxis>
+                            <Axis>
+                              <Title>
+                                <Caption>Room Rate</Caption>
+                                <Style />
+                              </Title>
+                              <MajorGridLines>
+                                <Style>
+                                  <BorderStyle>
+                                    <Default>Solid</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MajorGridLines>
+                              <MinorGridLines>
+                                <Style>
+                                  <BorderStyle>
+                                    <Default>Solid</Default>
+                                  </BorderStyle>
+                                </Style>
+                              </MinorGridLines>
+                              <MajorTickMarks>Outside</MajorTickMarks>
+                              <Min>70</Min>
+                              <Margin>true</Margin>
+                              <Visible>true</Visible>
+                              <Scalar>true</Scalar>
+                            </Axis>
+                          </ValueAxis>
+                          <Type>Column</Type>
+                          <CategoryGroupings>
+                            <CategoryGrouping>
+                              <DynamicCategories>
+                                <Grouping Name="chart1_CategoryGroup1">
+                                  <GroupExpressions>
+                                    <GroupExpression>=Fields!Period.Value</GroupExpression>
+                                  </GroupExpressions>
+                                </Grouping>
+                                <Label>=Format(Fields!Date.Value,"dd MMM")</Label>
+                              </DynamicCategories>
+                            </CategoryGrouping>
+                          </CategoryGroupings>
+                          <Palette>Pastel</Palette>
+                          <ChartData>
+                            <ChartSeries>
+                              <DataPoints>
+                                <DataPoint>
+                                  <DataValues>
+                                    <DataValue>
+                                      <Value>=Fields!Rate.Value</Value>
+                                    </DataValue>
+                                  </DataValues>
+                                  <DataLabel>
+                                    <Style>
+                                      <Color>Blue</Color>
+                                      <Format>C0</Format>
+                                    </Style>
+                                    <Value>=Fields!Rate.Value</Value>
+                                    <Position>Top</Position>
+                                  </DataLabel>
+                                  <Style>
+                                    <BackgroundColor>Blue</BackgroundColor>
+                                  </Style>
+                                  <Marker>
+                                    <Size>6pt</Size>
+                                  </Marker>
+                                </DataPoint>
+                              </DataPoints>
+                            </ChartSeries>
+                            <ChartSeries>
+                              <DataPoints>
+                                <DataPoint>
+                                  <DataValues>
+                                    <DataValue>
+                                      <Value>=Fields!RateLast.Value</Value>
+                                    </DataValue>
+                                  </DataValues>
+                                  <DataLabel>
+                                    <Style>
+                                      <Color>Chocolate</Color>
+                                      <Format>C0</Format>
+                                    </Style>
+                                    <Value>=Fields!RateLast.Value</Value>
+                                    <Position>Top</Position>
+                                  </DataLabel>
+                                  <Style>
+                                    <BackgroundColor>Chocolate</BackgroundColor>
+                                  </Style>
+                                  <Marker>
+                                    <Size>6pt</Size>
+                                  </Marker>
+                                </DataPoint>
+                              </DataPoints>
+                            </ChartSeries>
+                            <ChartSeries>
+                              <DataPoints>
+                                <DataPoint>
+                                  <DataValues>
+                                    <DataValue>
+                                      <Value>=Fields!RatePrevious.Value</Value>
+                                    </DataValue>
+                                  </DataValues>
+                                  <DataLabel>
+                                    <Style>
+                                      <Format>C0</Format>
+                                    </Style>
+                                    <Value>=Fields!RatePrevious.Value</Value>
+                                  </DataLabel>
+                                  <Marker>
+                                    <Size>6pt</Size>
+                                  </Marker>
+                                </DataPoint>
+                              </DataPoints>
+                            </ChartSeries>
+                          </ChartData>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <Title>
+                            <Caption>ROOM  RATE</Caption>
+                            <Style>
+                              <FontSize>12pt</FontSize>
+                              <FontWeight>700</FontWeight>
+                            </Style>
+                          </Title>
+                        </Chart>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>8cm</Height>
+                </TableRow>
+                <TableRow>
+                  <TableCells>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox17">
+                          <rd:DefaultName>textbox17</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>31</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox18">
+                          <rd:DefaultName>textbox18</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>30</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox19">
+                          <rd:DefaultName>textbox19</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>29</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox20">
+                          <rd:DefaultName>textbox20</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>28</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox21">
+                          <rd:DefaultName>textbox21</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>27</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox22">
+                          <rd:DefaultName>textbox22</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>26</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox23">
+                          <rd:DefaultName>textbox23</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>25</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox24">
+                          <rd:DefaultName>textbox24</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>24</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox25">
+                          <rd:DefaultName>textbox25</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>23</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox26">
+                          <rd:DefaultName>textbox26</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>22</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox27">
+                          <rd:DefaultName>textbox27</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>21</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox28">
+                          <rd:DefaultName>textbox28</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>20</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox29">
+                          <rd:DefaultName>textbox29</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>19</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox30">
+                          <rd:DefaultName>textbox30</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>18</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                    <TableCell>
+                      <ReportItems>
+                        <Textbox Name="textbox31">
+                          <rd:DefaultName>textbox31</rd:DefaultName>
+                          <Style>
+                            <BackgroundColor>White</BackgroundColor>
+                            <BorderColor>
+                              <Default>LightGrey</Default>
+                            </BorderColor>
+                            <BorderStyle>
+                              <Default>Solid</Default>
+                            </BorderStyle>
+                          </Style>
+                          <ZIndex>17</ZIndex>
+                          <CanGrow>true</CanGrow>
+                          <Value />
+                        </Textbox>
+                      </ReportItems>
+                    </TableCell>
+                  </TableCells>
+                  <Height>0.63492cm</Height>
+                </TableRow>
+              </TableRows>
+            </Footer>
+          </TableGroup>
+        </TableGroups>
+        <Width>37cm</Width>
+        <TableColumns>
+          <TableColumn>
+            <Width>2cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+          <TableColumn>
+            <Width>2.5cm</Width>
+          </TableColumn>
+        </TableColumns>
+        <Height>22.01984cm</Height>
+      </Table>
+      <Textbox Name="textbox1">
+        <rd:DefaultName>textbox1</rd:DefaultName>
+        <RepeatWith>table2</RepeatWith>
+        <Style>
+          <Color>SteelBlue</Color>
+          <FontFamily>Tahoma</FontFamily>
+          <FontSize>16pt</FontSize>
+          <FontWeight>700</FontWeight>
+          <TextAlign>Center</TextAlign>
+          <PaddingLeft>2pt</PaddingLeft>
+          <PaddingRight>2pt</PaddingRight>
+          <PaddingTop>2pt</PaddingTop>
+          <PaddingBottom>2pt</PaddingBottom>
+        </Style>
+        <Left>0.75cm</Left>
+        <Height>0.75cm</Height>
+        <Value>="Holdings Pickup Rate  (for Period starting " &amp; Format(Parameters!DatePeriodStart.Value, "dd MMM yyyy") &amp; ")"</Value>
+      </Textbox>
+    </ReportItems>
+    <Height>23.25cm</Height>
+  </Body>
+  <Language>en-US</Language>
+  <TopMargin>1cm</TopMargin>
+  <PageHeight>30cm</PageHeight>
+</Report>
