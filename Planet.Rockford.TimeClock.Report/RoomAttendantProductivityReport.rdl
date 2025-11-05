@@ -3848,11 +3848,11 @@
                       <Group Name="table2_Details_Group">
                         <DataElementName>Detail</DataElementName>
                       </Group>
-                      <SortExpressions>
+                      <!--<SortExpressions>
                         <SortExpression>
                           <Value>=Code.Productivity(Fields!Total.Value, Fields!EmployeeRevenue.Value)</Value>
                         </SortExpression>
-                      </SortExpressions>
+                      </SortExpressions>-->
                       <TablixMembers>
                         <TablixMember />
                       </TablixMembers>
